@@ -1,4 +1,4 @@
-//Prompt in screenshot
+//Prompt in README.md
 fun removeIslands(matrix: List<MutableList<Int>>): List<MutableList<Int>> {
     return finale(updateAdjacents(updateEdges(matrix)))
 }
@@ -29,7 +29,19 @@ fun updateAdjacents(matrix: List<MutableList<Int>>): List<MutableList<Int>>{
   }
 
   return matrix
-    
+
+}
+
+fun dfs(matrix: List<MutableList<Int>>, row: Int, column: Int): List<MutableList<Int>>{
+    var neighbors = getNeighbors(matrix, row, column)
+    for(neiba in neighbors){
+      if(matrix[neiba.first][neiba.second]==1){
+        matrix[neiba.first][neiba.second]=2
+        dfs(matrix, neiba.first, neiba.second)
+      }
+    }
+
+  return matrix
 }
 
 fun getNeighbors(matrix: List<MutableList<Int>>, row: Int, column: Int): MutableList<Pair<Int,Int>>{
@@ -49,18 +61,6 @@ fun getNeighbors(matrix: List<MutableList<Int>>, row: Int, column: Int): Mutable
   return neighbors
 }
 
-fun dfs(matrix: List<MutableList<Int>>, row: Int, column: Int): List<MutableList<Int>>{
-    var neighbors = getNeighbors(matrix, row, column)
-    for(neiba in neighbors){
-      if(matrix[neiba.first][neiba.second]==1){
-        matrix[neiba.first][neiba.second]=2
-        dfs(matrix, neiba.first, neiba.second)
-      }
-    }
-    
-  return matrix
-}
-
 fun finale(matrix: List<MutableList<Int>>): List<MutableList<Int>>{
   for(i in 0 until matrix.size){
     for(j in 0 until matrix[0].size){
@@ -76,24 +76,17 @@ fun finale(matrix: List<MutableList<Int>>): List<MutableList<Int>>{
 }
 
 
-
-/*input
-[
-  [1, 0, 0, 0, 0, 0],
-  [0, 1, 0, 1, 1, 1],
-  [0, 0, 1, 0, 1, 0],
-  [1, 1, 0, 0, 1, 0],
-  [1, 0, 1, 1, 0, 0],
-  [1, 0, 0, 0, 0, 1]
-]*/
-
-/*output
-[
-  [1, 0, 0, 0, 0, 0],
-  [0, 0, 0, 1, 1, 1],
-  [0, 0, 0, 0, 1, 0],
-  [1, 1, 0, 0, 1, 0],
-  [1, 0, 0, 0, 0, 0],
-  [1, 0, 0, 0, 0, 1]
-]
-*/
+fun main(){
+  var matrix = listOf<MutableList<Int>>(
+        mutableListOf(1, 0, 0, 0, 0, 0),
+        mutableListOf(0, 1, 0, 1, 1, 1),
+        mutableListOf(0, 0, 1, 0, 1, 0),
+        mutableListOf(1, 1, 0, 0, 1, 0),
+        mutableListOf(1, 0, 1, 1, 0, 0),
+        mutableListOf(1, 0, 0, 0, 0, 1)
+    )
+  var result= removeIslands(matrix)
+  for(row in result){
+    println(row)
+  }
+}
